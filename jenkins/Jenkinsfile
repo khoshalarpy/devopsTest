@@ -1,0 +1,56 @@
+
+
+pipeline {
+  agent any
+  environment {
+    version = sh (
+      script: 'git log --no-merges -1 --pretty=%h',
+      returnStdout: true
+    ).trim()
+  }
+  options{
+    disableConcurrentBuilds()
+  }
+
+  stages {
+    stage("System preparation") {
+      steps {
+        dir('files') {
+          git branch 'develop'
+              url: 'https://github.com/khoshalarpy/devopsTest.git'
+        }
+        sh ""
+
+      }
+    }
+
+    stage("Integration Test") {
+      steps {
+        sh "echo Integration testing
+        sh "sleep 30"
+      }
+    }
+
+
+
+    stage("Deploy to Prod") {
+      when {
+        branch "master"
+      }
+      steps {
+        //build('/devopsProjects/prod)
+        sh "echo prod deployment"
+      }
+    }
+
+  }
+  post {
+      always {
+          // Publish unit test report
+          //junit '**/xunit-reports/xunit-*.xml'
+          // Publish code coverage report
+      }
+
+   }
+}
+
