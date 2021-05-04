@@ -8,18 +8,12 @@ pipeline {
       returnStdout: true
     ).trim()
   }
-  options{
-    disableConcurrentBuilds()
-  }
+
 
   stages {
     stage("Build step1") {
       steps {
-        dir('files') {
-          git branch 'develop'
-              url: 'https://github.com/khoshalarpy/devopsTest.git'
-        }
-        sh "build step1"
+        sh "build ${version}"
 
       }
     }
