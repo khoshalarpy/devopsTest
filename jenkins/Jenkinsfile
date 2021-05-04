@@ -1,7 +1,9 @@
 
 
 pipeline {
-  agent any
+  //agent any
+  agent { 'devopsdemo1'
+  }
   environment {
     version = sh (
       script: 'git log --no-merges -1 --pretty=%h',
