@@ -13,32 +13,28 @@ pipeline {
   }
 
   stages {
-    stage("System preparation") {
+    stage("Build step1") {
       steps {
         dir('files') {
           git branch 'develop'
               url: 'https://github.com/khoshalarpy/devopsTest.git'
         }
-        sh ""
+        sh "build step1"
 
       }
     }
 
-    stage("Integration Test") {
+    stage("build step2") {
       steps {
-        sh "echo Integration testing
         sh "sleep 30"
       }
     }
 
 
 
-    stage("Deploy to Prod") {
-      when {
-        branch "master"
-      }
+    stage("Deploy step1") {
+
       steps {
-        //build('/devopsProjects/prod)
         sh "echo prod deployment"
       }
     }
@@ -46,8 +42,7 @@ pipeline {
   }
   post {
       always {
-          // Publish unit test report
-          //junit '**/xunit-reports/xunit-*.xml'
+
           // Publish code coverage report
       }
 
