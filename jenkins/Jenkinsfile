@@ -1,25 +1,21 @@
 
 
 pipeline {
-  agent any
+  //agent any
+  agent { 'devopsdemo1'
+  }
   environment {
     version = sh (
       script: 'git log --no-merges -1 --pretty=%h',
       returnStdout: true
     ).trim()
   }
-  options{
-    disableConcurrentBuilds()
-  }
+
 
   stages {
     stage("Build step1") {
       steps {
-        dir('files') {
-          git branch 'develop'
-              url: 'https://github.com/khoshalarpy/devopsTest.git'
-        }
-        sh "build step1"
+        sh "echo ${version}"
 
       }
     }
@@ -42,8 +38,7 @@ pipeline {
   }
   post {
       always {
-
-          // Publish code coverage report
+       sh "echo completed!"
       }
 
    }
